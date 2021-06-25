@@ -1,15 +1,19 @@
 package com.example.note2;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,12 +21,16 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,40 +46,72 @@ import okhttp3.Response;
 
 public class ActivityNote extends AppCompatActivity {
     ListView lv;
-    Button button;
+    TextView textView;
     Intent intent;
     Toolbar toolbar;
-   FloatingActionButton buttonADD;
+    //ImageView imageView;
+    NavigationView navigationView;
+    DrawerLayout drawerLayout;
+    FloatingActionButton buttonADD;
     ArrayList<Note> arrNote;
     String stringTD;
     String stringND;
     String USER;
     public static final String USERNAME = "USERNAME";
-
     SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note);
-        lv = findViewById(R.id.listNote);
-       buttonADD = findViewById(R.id.btnThem);
-       toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        Anhxa();
+        AcctionBar();
+       // registerForContextMenu(imageView        );
 
+
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                switch ((item.getItemId()))
+                {
+                    case R.id.mSetting:
+                    {
+                        Intent intent = new Intent(ActivityNote.this, ActivitySetting.class);
+                        startActivity(intent);
+                        break;
+                    }
+
+                    case R.id.mLogout:
+                    {
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear();
+                        editor.commit();
+
+                        Intent intent = new Intent(ActivityNote.this, ActiLogin.class);
+                        startActivity(intent);
+                        break;
+                    }
+                    case R.id.mSupport:
+                    {
+                        Toast.makeText(ActivityNote.this, "setting", Toast.LENGTH_SHORT).show();
+                        break;
+                    }
+                }
+                return false;
+            }
+        });
         sharedPreferences = getSharedPreferences("HisLog", MODE_PRIVATE);
 
         intent = getIntent();
         USER = intent.getStringExtra(ActiLogin.USERNAME);
 
+        //Load listview note
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 new LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
             }
         });
-
-
         buttonADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,20 +132,77 @@ public class ActivityNote extends AppCompatActivity {
                 bundle.putString("CL", arrNote.get(position).Nhan);
                 intentDetail.putExtras(bundle);
                 startActivity(intentDetail);
-
-            }
-
-        });
-
-        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                XacNhanXoa(arrNote.get(position).ID);
-                return false;
             }
         });
 
+//        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//                XacNhanXoa(arrNote.get(position).ID);
+//                return false;
+//            }
+//        });
+//        imageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(ActivityNote.this, "Xoa", Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
+
+/*    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        getMenuInflater().inflate(R.menu.context_menu, menu);
+        menu.setHeaderTitle("Tuỳ chọn: ");
+
+        super.onCreateContextMenu(menu, v, menuInfo);
+    }*/
+
+//    @Override
+//    public boolean onContextItemSelected(@NonNull MenuItem item) {
+//        switch (item.getItemId()){
+//            case R.id.mSaoChep:
+//                Toast.makeText(ActivityNote.this, "chép", Toast.LENGTH_LONG).show();
+//                break;
+//        }
+//        return super.onContextItemSelected(item);
+//    }
+
+    private void Anhxa()
+    {
+        lv = findViewById(R.id.listNote);
+        buttonADD = findViewById(R.id.btnThem);
+        toolbar = findViewById(R.id.toolbar);
+        drawerLayout = findViewById(R.id.layoutNote);
+        navigationView = findViewById(R.id.nav_note);
+        textView = findViewById(R.id.textView2);
+       // imageView = findViewById(R.id.imageViewNote);
+    }
+    private void AcctionBar()
+    {
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_draw);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.START);
+            }
+        });
+    }
+
+//    private void LoadSpinner()
+//    {
+//        ArrayList<String> arrColor = new ArrayList<>();
+//        arrColor.add("Toàn bộ");
+//        arrColor.add("Blue");
+//        arrColor.add("Green");
+//        arrColor.add("Orange");
+//        arrColor.add("Grey");
+//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrColor);
+//        spinner.setAdapter(adapter);
+//    }
     private void XacNhanXoa(final int id)
     {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
@@ -125,39 +222,37 @@ public class ActivityNote extends AppCompatActivity {
         });
         dialog.show();
     }
-
+    //menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu1, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch ((item.getItemId()))
-        {
-            case R.id.mnSet:
-            {
-                Intent intent = new Intent(ActivityNote.this, ActivitySetting.class);
-                startActivity(intent);
-                break;
-            }
-
-            case R.id.mnLogout:
-            {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.commit();
-
-                Intent intent = new Intent(ActivityNote.this, ActiLogin.class);
-                startActivity(intent);
-                break;
-            }
-
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+//        switch ((item.getItemId()))
+//        {
+//            case R.id.mnSet:
+//            {
+//                Intent intent = new Intent(ActivityNote.this, ActivitySetting.class);
+//                startActivity(intent);
+//                break;
+//            }
+//
+//            case R.id.mnLogout:
+//            {
+//                SharedPreferences.Editor editor = sharedPreferences.edit();
+//                editor.clear();
+//                editor.commit();
+//
+//                Intent intent = new Intent(ActivityNote.this, ActiLogin.class);
+//                startActivity(intent);
+//                break;
+//            }
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
 
     class  LoadLV extends AsyncTask<String, String, String>
     {

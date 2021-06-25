@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,26 +8,43 @@
     android:layout_marginVertical="12dp">
 
     <TextView
+        android:id="@+id/textViewTD"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="15dp"
+        android:layout_toStartOf="@+id/imageViewNote"
+        android:maxLength="50"
+        android:text="Tiêu đề"
+        android:padding="1dp"
         android:textSize="17dp"
         android:textStyle="bold"
-        android:id="@+id/textViewTD"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
-        android:text="TextView"
-        android:maxLength="50"
-        android:layout_marginHorizontal="7dp"
         tools:layout_editor_absoluteX="17dp"
         tools:layout_editor_absoluteY="21dp" />
 
     <TextView
         android:id="@+id/textViewND"
-        android:layout_marginHorizontal="7dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
+        android:layout_below="@+id/textViewTD"
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginTop="2dp"
         android:layout_marginBottom="7dp"
         android:maxLength="200"
-        android:padding="3dp"
-        />
-</LinearLayout>
+        android:padding="1dp"
+        android:text="Nội dung ghi chú" />
+
+    <ImageView
+        android:id="@+id/imageViewNote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginHorizontal="7dp"
+        android:layout_marginEnd="-1dp"
+        android:src="@drawable/ic_plus" />
+
+</RelativeLayout>

@@ -20,6 +20,8 @@ import androidx.appcompat.widget.Toolbar;
 import com.example.note2.R;
 import com.google.android.material.navigation.NavigationView;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -33,7 +35,34 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         anhXa();
         actionToolBar();
-    } private void anhXa() {
+
+        navigationview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+                switch ((item.getItemId()))
+        {
+            case R.id.mSetting:
+            {
+                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_LONG).show();
+                break;
+            }
+
+            case R.id.mLogout:
+            {
+                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.mSupport:
+            {
+                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_SHORT).show();
+                break;
+            }
+        }
+                return false;
+            }
+        });
+    }
+    private void anhXa() {
         toolbar = (Toolbar) findViewById(R.id.toolBar);
         drawerlayout = (DrawerLayout) findViewById (R.id.drawerLayout);
         navigationview = (NavigationView) findViewById(R.id.navigationView);
@@ -53,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
             //Để mở Drawer , khi người dùng chạm vào button
         });
     }
+
+
 
 //    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //        switch ((item.getItemId()))

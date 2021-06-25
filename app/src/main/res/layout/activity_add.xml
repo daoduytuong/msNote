@@ -63,9 +63,10 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarDki"
+        style="@style/Widget.MaterialComponents.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#A9A9A9"
+
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
     <Spinner

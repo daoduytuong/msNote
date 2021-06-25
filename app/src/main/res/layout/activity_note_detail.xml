@@ -50,10 +50,11 @@
             android:inputType="textMultiLine"
             android:maxLength="3001"
             android:textSize="19dp" />
-    </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        style="@style/Widget.MaterialComponents.FloatingActionButton"
         android:id="@+id/fbtnUpdate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -67,13 +68,13 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarNoteDetail"
+        style="@style/Widget.MaterialComponents.Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="0dp"
-        android:background="#A9A9A9"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme" />
 
@@ -81,7 +82,6 @@
         android:id="@+id/spinner3"
         android:layout_width="124dp"
         android:layout_height="56dp"
-        style="@style/ActionBarThemeOverlay"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="1dp"

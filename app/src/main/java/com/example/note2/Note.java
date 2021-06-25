@@ -15,6 +15,11 @@ public abstract class Note
         NoiDung = noiDung;
         Nhan = nhan;
     }
+
+    public int getID() {
+        return ID;
+    }
+
     @Override
     public String toString()
     {

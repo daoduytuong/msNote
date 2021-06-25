@@ -11,7 +11,8 @@
     <color name="cl1">#00BFFF</color>
     <color name="cl2">#7FFFD4</color>
     <color name="cl3">#FAFAD2</color>
-    <color name="Grey">#A9A9A9</color>
-
+    <color name="Grey">#B5B5B5</color>
+    <color name="Gray21">#363636</color>
+    <color name="Gray11">#1C1C1C</color>
 
 </resources>
