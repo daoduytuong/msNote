@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.DialogInterface;
@@ -13,6 +15,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -53,7 +56,8 @@ public class ActivityNote extends AppCompatActivity {
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     FloatingActionButton buttonADD;
-    ArrayList<Note> arrNote;
+    public static ArrayList<Note> arrNote;
+    NoteAdapter noteAdapter;
     String stringTD;
     String stringND;
     String USER;
@@ -67,8 +71,17 @@ public class ActivityNote extends AppCompatActivity {
         Anhxa();
         AcctionBar();
        // registerForContextMenu(imageView        );
+        sharedPreferences = getSharedPreferences("HisLog", MODE_PRIVATE);
+        String user = sharedPreferences.getString("username", "");
+        String pass = sharedPreferences.getString("password", "");
+//
+//        if( user.equals("") || pass.equals(""))
+//        {
+//            Intent intent = new Intent(ActivityNote.this, ActiLogin.class);
+//            startActivity(intent);
+//        }
 
-
+        // sự kiện nav bar
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
@@ -80,7 +93,6 @@ public class ActivityNote extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     }
-
                     case R.id.mLogout:
                     {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -100,7 +112,7 @@ public class ActivityNote extends AppCompatActivity {
                 return false;
             }
         });
-        sharedPreferences = getSharedPreferences("HisLog", MODE_PRIVATE);
+
 
         intent = getIntent();
         USER = intent.getStringExtra(ActiLogin.USERNAME);
@@ -112,6 +124,7 @@ public class ActivityNote extends AppCompatActivity {
                 new LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
             }
         });
+
         buttonADD.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -203,31 +216,60 @@ public class ActivityNote extends AppCompatActivity {
 //        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrColor);
 //        spinner.setAdapter(adapter);
 //    }
-    private void XacNhanXoa(final int id)
-    {
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Xac nhan xoa");
-        dialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                new XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
-            }
-
-        });
-        dialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        });
-        dialog.show();
-    }
+//    private void XacNhanXoa(final int id)
+//    {
+//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+//        dialog.setTitle("Xac nhan xoa");
+//        dialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                new XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
+//            }
+//
+//        });
+//        dialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                dialog.cancel();
+//            }
+//        });
+//        dialog.show();
+//    }
     //menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu1, menu);
+    //    MenuItem menuItem = menu.findItem(R.id.app_bar_search);
+        SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+//       SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                noteAdapter.fillter(newText.trim());
+//                return false;
+//            }
+//        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(ActivityNote.this, query, Toast.LENGTH_LONG).show();
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                Log.d("Searc", newText);
+                noteAdapter.fillter(newText.trim());
+                return false;
+            }
+        });
         return super.onCreateOptionsMenu(menu);
     }
+
 //
 //    @Override
 //    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -312,7 +354,7 @@ public class ActivityNote extends AppCompatActivity {
 //                ArrayAdapter adapter = new ArrayAdapter(
 //                        ActivityNote.this, android.R.layout.simple_list_item_1,arrNote
 //                );
-                NoteAdapter noteAdapter = new NoteAdapter(
+                noteAdapter = new NoteAdapter(
                         ActivityNote.this,
                         R.layout.row_note,
                         arrNote
@@ -355,50 +397,50 @@ public class ActivityNote extends AppCompatActivity {
         }
     }
 
-    class  XoaNote extends AsyncTask<String, String, String>
-    {
-        OkHttpClient client = new OkHttpClient();
-        int id;
-        public XoaNote(int id) {
-            this.id = id;
-        }
-        @Override
-        protected String doInBackground(String... strings)
-        {
-            RequestBody requestBody = new MultipartBody.Builder()
-                    .addFormDataPart("id", String.valueOf(id))
-                    .setType(MultipartBody.FORM)
-                    .build();
-
-            Request request = new Request.Builder()
-                    .url(strings[0])
-                    .post(requestBody)
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            if(s.equals("true"))
-            {
-                Toast.makeText(ActivityNote.this, "Xoa thanh cong", Toast.LENGTH_LONG).show();
-                new LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
-            }
-            if(s.equals("ERROR09"))
-            {
-                Toast.makeText(ActivityNote.this, "Loi truyen du lieu", Toast.LENGTH_LONG).show();
-            }
-            if(s.equals("ERROR10"))
-            {
-                Toast.makeText(ActivityNote.this, "Xoa that bai", Toast.LENGTH_LONG).show();
-            }
-            super.onPostExecute(s);
-        }
-    }
+//    public class  XoaNote extends AsyncTask<String, String, String>
+//    {
+//        OkHttpClient client = new OkHttpClient();
+//        int id;
+//        public XoaNote(int id) {
+//            this.id = id;
+//        }
+//        @Override
+//        protected String doInBackground(String... strings)
+//        {
+//            RequestBody requestBody = new MultipartBody.Builder()
+//                    .addFormDataPart("id", String.valueOf(id))
+//                    .setType(MultipartBody.FORM)
+//                    .build();
+//
+//            Request request = new Request.Builder()
+//                    .url(strings[0])
+//                    .post(requestBody)
+//                    .build();
+//            try {
+//                Response response = client.newCall(request).execute();
+//                return response.body().string();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            return null;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            if(s.equals("true"))
+//            {
+//                Toast.makeText(ActivityNote.this, "Xoa thanh cong", Toast.LENGTH_LONG).show();
+//                new LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
+//            }
+//            if(s.equals("ERROR09"))
+//            {
+//                Toast.makeText(ActivityNote.this, "Loi truyen du lieu", Toast.LENGTH_LONG).show();
+//            }
+//            if(s.equals("ERROR10"))
+//            {
+//                Toast.makeText(ActivityNote.this, "Xoa that bai", Toast.LENGTH_LONG).show();
+//            }
+//            super.onPostExecute(s);
+//        }
+//    }
 }

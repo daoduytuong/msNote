@@ -34,10 +34,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="7dp"
                 android:layout_marginTop="80dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:dividerHeight="2dp"
-                ></ListView>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"></ListView>
+
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnThem"
                 android:layout_width="wrap_content"

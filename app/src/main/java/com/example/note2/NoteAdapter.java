@@ -2,28 +2,47 @@ package com.example.note2;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+import java.io.File;
+import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
-public class NoteAdapter extends BaseAdapter {
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public class NoteAdapter extends BaseAdapter{
     Context context;
     int Layout;
     List<Note> arrNote;
+    ArrayList<Note> ListNotetmp;
+    ListView listView;
+    int a;
 
     public NoteAdapter(Context context, int layout, ArrayList<Note> arrNote) {
         this.context = context;
         Layout = layout;
         this.arrNote = arrNote;
+        this.ListNotetmp = new ArrayList<Note>();
+        this.ListNotetmp.addAll(arrNote);
     }
 
     @Override
@@ -38,7 +57,7 @@ public class NoteAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -56,26 +75,48 @@ public class NoteAdapter extends BaseAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, ""+arrNote.get(position).getID(), Toast.LENGTH_LONG).show();
+              //  Toast.makeText(context, ""+arrNote.get(position).getID(), Toast.LENGTH_LONG).show();
                 XacNhanXoa(arrNote.get(position).getID());
+                a = position; //lấy posision ra để xuống dưới xoá
             }
         });
-
-
         return convertView;
+    }
+
+    public void fillter(String charText)
+    {
+        charText = charText.toLowerCase(Locale.getDefault());
+        arrNote.clear();
+        if(charText.length() == 0)
+        {
+            arrNote.addAll(ListNotetmp);
+        } else
+        {
+            for (Note not : ListNotetmp)
+            {
+                if(not.TieuDe.toString().toLowerCase(Locale.getDefault())
+                        .contains(charText))
+                {
+                    arrNote.add(not);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 
     private void XacNhanXoa(final int id)
     {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-        dialog.setTitle("Xac nhan xoa");
+        dialog.setTitle("Xoá ghi chú");
+
         dialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //new ActivityNote.XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
-                Toast.makeText(context, "     fsfsfsfgsfs fsf s f", Toast.LENGTH_LONG).show();
+              //  new ActivityNote.XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
+                new  XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
+             //   Toast.makeText(context, " Xoa.", Toast.LENGTH_LONG).show();
+                ActivityNote.arrNote.remove(a);
             }
-
         });
         dialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
             @Override
@@ -87,4 +128,74 @@ public class NoteAdapter extends BaseAdapter {
     }
 
 
+
+//    @Override
+//    public Filter getFilter() {
+//        Filter filter = new Filter() {
+//            @Override
+//            protected FilterResults performFiltering(CharSequence constraint) {
+//                return null;
+//            }
+//
+//            @Override
+//            protected void publishResults(CharSequence constraint, FilterResults results) {
+//
+//            }
+//        };
+//        return filter;
+//    }
+
+
+    class  XoaNote extends AsyncTask<String, String, String>
+    {
+        OkHttpClient client = new OkHttpClient();
+        int id;
+        public XoaNote(int id) {
+            this.id = id;
+        }
+        @Override
+        protected String doInBackground(String... strings)
+        {
+            RequestBody requestBody = new MultipartBody.Builder()
+                    .addFormDataPart("id", String.valueOf(id))
+                    .setType(MultipartBody.FORM)
+                    .build();
+
+            Request request = new Request.Builder()
+                    .url(strings[0])
+                    .post(requestBody)
+                    .build();
+            try {
+                Response response = client.newCall(request).execute();
+                return response.body().string();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            if(s.equals("true"))
+            {
+                Toast.makeText(context, "Xoa thanh cong", Toast.LENGTH_LONG).show();
+              //  new ActivityNote.LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
+                notifyDataSetChanged(); //baó cáo, để reload listview
+            }
+            if(s.equals("ERROR09"))
+            {
+                Toast.makeText(context, "Loi truyen du lieu", Toast.LENGTH_LONG).show();
+            }
+            if(s.equals("ERROR10"))
+            {
+                Toast.makeText(context, "Xoa that bai", Toast.LENGTH_LONG).show();
+            }
+            super.onPostExecute(s);
+        }
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        super.notifyDataSetChanged();
+    }
 }
