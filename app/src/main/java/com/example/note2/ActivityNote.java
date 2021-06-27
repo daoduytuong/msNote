@@ -60,7 +60,6 @@ public class ActivityNote extends AppCompatActivity {
     NoteAdapter noteAdapter;
     String stringTD;
     String stringND;
-    String USER;
     public static final String USERNAME = "USERNAME";
     SharedPreferences sharedPreferences;
 
@@ -71,10 +70,7 @@ public class ActivityNote extends AppCompatActivity {
         Anhxa();
         AcctionBar();
         intent = getIntent();
-        USER = intent.getStringExtra(ActiLogin.USERNAME);
-
-
-
+        //USER = intent.getStringExtra(ActiLogin.USERNAME);
 
         sharedPreferences = getSharedPreferences("HisLog", MODE_PRIVATE);
         String user = sharedPreferences.getString("username", "");
@@ -139,7 +135,7 @@ public class ActivityNote extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
+                new LoadLV(user).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
             }
         });
 
@@ -147,7 +143,7 @@ public class ActivityNote extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityNote.this, ActivityADD.class);
-                intent.putExtra(USERNAME, USER);
+                intent.putExtra(USERNAME, user);
                 startActivity(intent);
             }
         });
@@ -196,7 +192,7 @@ public class ActivityNote extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menusearch, menu); //set menu
 
-        SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
+         SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -279,6 +275,7 @@ public class ActivityNote extends AppCompatActivity {
                         arrNote
                         )
                 {
+                    //hiển thị màu
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
                         View view = super.getView(position, convertView, parent);
@@ -316,50 +313,4 @@ public class ActivityNote extends AppCompatActivity {
         }
     }
 
-//    public class  XoaNote extends AsyncTask<String, String, String>
-//    {
-//        OkHttpClient client = new OkHttpClient();
-//        int id;
-//        public XoaNote(int id) {
-//            this.id = id;
-//        }
-//        @Override
-//        protected String doInBackground(String... strings)
-//        {
-//            RequestBody requestBody = new MultipartBody.Builder()
-//                    .addFormDataPart("id", String.valueOf(id))
-//                    .setType(MultipartBody.FORM)
-//                    .build();
-//
-//            Request request = new Request.Builder()
-//                    .url(strings[0])
-//                    .post(requestBody)
-//                    .build();
-//            try {
-//                Response response = client.newCall(request).execute();
-//                return response.body().string();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            if(s.equals("true"))
-//            {
-//                Toast.makeText(ActivityNote.this, "Xoa thanh cong", Toast.LENGTH_LONG).show();
-//                new LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
-//            }
-//            if(s.equals("ERROR09"))
-//            {
-//                Toast.makeText(ActivityNote.this, "Loi truyen du lieu", Toast.LENGTH_LONG).show();
-//            }
-//            if(s.equals("ERROR10"))
-//            {
-//                Toast.makeText(ActivityNote.this, "Xoa that bai", Toast.LENGTH_LONG).show();
-//            }
-//            super.onPostExecute(s);
-//        }
-//    }
 }
