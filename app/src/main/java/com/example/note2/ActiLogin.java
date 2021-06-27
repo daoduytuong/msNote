@@ -30,7 +30,7 @@ import okhttp3.Response;
 public class ActiLogin extends AppCompatActivity {
     Button button;
     TextInputEditText textViewUS;
-    TextInputEditText pass;
+    TextInputEditText textpass;
     TextView tt;
     SharedPreferences sharedPreferences;
     Toolbar toolbar;
@@ -43,36 +43,57 @@ public class ActiLogin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acti_login);
 
-        sharedPreferences = getSharedPreferences("HisLog", MODE_PRIVATE);
         button = findViewById(R.id.btnLogin);
         textViewUS = findViewById(R.id.editTextUsername);
         tt = findViewById(R.id.textViewLogin);
-        pass = findViewById(R.id.editTextPassword);
+        textpass = findViewById(R.id.editTextPassword);
         toolbar = findViewById(R.id.toolbarLogin);
 
         setSupportActionBar(toolbar);
+        //sharedPreferences
+        sharedPreferences = getSharedPreferences("HisLog", MODE_PRIVATE);
 
+        AutoLogin();
+
+        //lấy dữ liẹu từ sharedPreferences
         textViewUS.setText(sharedPreferences.getString("username", ""));
-        pass.setText(sharedPreferences.getString("password", ""));
+        textpass.setText(sharedPreferences.getString("password", ""));
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String User = textViewUS.getText().toString().trim();
-                String Pass = pass.getText().toString().trim();
+                String Pass = textpass.getText().toString().trim();
                 new PostToServer(User, Pass).execute("http://tuongdhqn-001-site1.ftempurl.com/postLog.php");
             }
         });
     }
 
+    public void AutoLogin()
+    {
+        String user = sharedPreferences.getString("username", "");
+        String pass = sharedPreferences.getString("password", "");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new  PostToServer(user,pass).execute("http://tuongdhqn-001-site1.ftempurl.com/postLog.php");
+            }
+        });
+    }
+
+    //set menu
+    //là góc trên phải chữ SIGN IN
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menulogin, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    // sự kiện cái menu
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.mnDki)
         {
+            // chuyển màn hình
             Intent intent = new Intent(ActiLogin.this, ActivityDangKy.class);
             startActivity(intent);
         }
@@ -114,17 +135,15 @@ public class ActiLogin extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String s) {
-
             if(s.equals("true"))
             {
-                tt.setText("Đăng nhập thành công");
-               // Toast.makeText(ActiLogin.this, "Thanh cong", Toast.LENGTH_LONG).show();
-                SharedPreferences.Editor editor = sharedPreferences.edit();
+                // Toast.makeText(ActiLogin.this, "Thanh cong", Toast.LENGTH_LONG).show();
+                SharedPreferences.Editor editor = sharedPreferences.edit(); //lưu data vào sharedPreferences
                 editor.putString("username", user);
                 editor.putString("password", ps);
                 editor.commit();
 
-                Intent intent = new Intent(ActiLogin.this, ActivityNote.class);
+                Intent intent = new Intent(ActiLogin.this, ActivityNote.class); //chuyển màn hình
                 intent.putExtra(USERNAME, user);
                 startActivity(intent);
             }else if(s.equals("false"))

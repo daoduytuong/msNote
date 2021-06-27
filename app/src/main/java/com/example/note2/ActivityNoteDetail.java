@@ -48,11 +48,8 @@ public class ActivityNoteDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_detail);
 
-        textViewTD = findViewById(R.id.editTextTD);
-        textViewND = findViewById(R.id.editTextND);
-        button = findViewById(R.id.fbtnUpdate);
-        toolbar = findViewById(R.id.toolbarNoteDetail);
-        color = findViewById(R.id.spinner3);
+        Anhxa();
+        LoadSpiner();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -64,6 +61,20 @@ public class ActivityNoteDetail extends AppCompatActivity {
         textViewND.setText(bundle.getString("ND"));
         Bcolor = bundle.getString("CL");
 
+        //color.setSelection(getIndex(color, Bcolor))
+       // color.setSelection(2);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                td = textViewTD.getText().toString().trim();
+                nd = textViewND.getText().toString().trim();
+                new PostToServer(id, td, nd, Scolor).execute("http://tuongdhqn-001-site1.ftempurl.com/updateNote.php");
+            }
+        });
+    }
+
+    private void LoadSpiner() {
         ArrayList<String> arrColor = new ArrayList<>();
         arrColor.add("Mặc định");
         arrColor.add("Blue");
@@ -99,19 +110,25 @@ public class ActivityNoteDetail extends AppCompatActivity {
 
             }
         });
-
-
-
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                td = textViewTD.getText().toString().trim();
-                nd = textViewND.getText().toString().trim();
-                new PostToServer(id, td, nd, Scolor).execute("http://tuongdhqn-001-site1.ftempurl.com/updateNote.php");
-            }
-        });
     }
+
+    private void Anhxa() {
+        textViewTD = findViewById(R.id.editTextTD);
+        textViewND = findViewById(R.id.editTextND);
+        button = findViewById(R.id.fbtnUpdate);
+        toolbar = findViewById(R.id.toolbarNoteDetail);
+        color = findViewById(R.id.spinner3);
+    }
+
+//    private int getIndex(Spinner spinner, String myString){
+//        for (int i=0;i<spinner.getCount();i++){
+//            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
+//                return i;
+//            }
+//        }
+//
+//        return 0;
+//    }
 
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu2, menu);

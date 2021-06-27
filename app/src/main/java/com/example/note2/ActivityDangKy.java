@@ -30,10 +30,12 @@ public class ActivityDangKy extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dang_ky);
+
         button = findViewById(R.id.btnRegister);
         textViewUS = findViewById(R.id.editTextUsernameReg);
         pass = findViewById(R.id.editTextPasswordReg);
         tt = findViewById(R.id.textViewReg);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,7 +86,6 @@ public class ActivityDangKy extends AppCompatActivity {
             if(s.equals("SUCCESS"))
             {
                 Toast.makeText(ActivityDangKy.this, "Dang ky thanh cong", Toast.LENGTH_LONG).show();
-                tt.setText(s.toString() + " Thanh cong");
                 tt.setText("Tạo tài khoản thành công");
 
             }

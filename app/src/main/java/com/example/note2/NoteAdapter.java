@@ -104,6 +104,26 @@ public class NoteAdapter extends BaseAdapter{
         notifyDataSetChanged();
     }
 
+    public void fillterNhan(String charText)
+    {
+        charText = charText.toLowerCase(Locale.getDefault());
+        arrNote.clear();
+        if(charText.length() == 0)
+        {
+            arrNote.addAll(ListNotetmp);
+        } else
+        {
+            for (Note not : ListNotetmp)
+            {
+                if(not.Nhan.toString().toLowerCase(Locale.getDefault())
+                        .contains(charText))
+                {
+                    arrNote.add(not);
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
     private void XacNhanXoa(final int id)
     {
         AlertDialog.Builder dialog = new AlertDialog.Builder(context);

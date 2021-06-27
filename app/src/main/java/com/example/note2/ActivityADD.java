@@ -31,7 +31,7 @@ public class ActivityADD extends AppCompatActivity {
     EditText textViewND;
     String td, nd;
     String Scoler;
-    Spinner color;
+    Spinner spinner;
     String USER;
     Toolbar toolbar;
     //TextView ADD;
@@ -45,13 +45,16 @@ public class ActivityADD extends AppCompatActivity {
         textViewTD = findViewById(R.id.editTextAddTD);
         textViewND = findViewById(R.id.editTextAddND);
         button = findViewById(R.id.fbtnADD);
-        color = findViewById(R.id.spinner2);
+        spinner = findViewById(R.id.spinner2);
         toolbar=findViewById(R.id.toolbarDki);
 
+        //set toolbar
         setSupportActionBar(toolbar);
 
+        //get User đc truyền từ trang trước
         Intent intent = getIntent();
         USER = intent.getStringExtra(ActivityNote.USERNAME);
+
 
         ArrayList<String> arrColor = new ArrayList<>();
         arrColor.add("Mặc định");
@@ -60,9 +63,12 @@ public class ActivityADD extends AppCompatActivity {
         arrColor.add("Orange");
         arrColor.add("Grey");
 
+        //set adapter cho spinner
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrColor);
-        color.setAdapter(adapter);
-        color.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinner.setAdapter(adapter);
+
+        // sự kiện spiner
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (arrColor.get(position))
@@ -90,7 +96,7 @@ public class ActivityADD extends AppCompatActivity {
 
             }
         });
-
+        //bắt sự kiện button thêm
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +109,7 @@ public class ActivityADD extends AppCompatActivity {
             }
         });
     }
-
+    //gửi dữ liệu lên server
     class PostToServer extends AsyncTask<String, Void, String>
     {
         OkHttpClient client = new OkHttpClient();
@@ -112,7 +118,7 @@ public class ActivityADD extends AppCompatActivity {
         String ND;
         String cl;
 
-        public PostToServer(String user, String td, String nd, String cl) {
+        public PostToServer(String user, String td, String nd, String cl) { //phương thức khởi tạo
             this.user = user;
             this.TD = td;
             this.ND = nd;
@@ -122,8 +128,9 @@ public class ActivityADD extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings)
         {
+            //đoạn này chưa hiểu rõ
             RequestBody requestBody = new MultipartBody.Builder()
-                    .addFormDataPart("username", user)
+                    .addFormDataPart("username", user) //set dữ liệu vào biến POST để thg php lất $_POST[username]
                     .addFormDataPart("tieude", TD)
                     .addFormDataPart("noidung", ND)
                     .addFormDataPart("color", cl)
@@ -131,12 +138,12 @@ public class ActivityADD extends AppCompatActivity {
                     .build();
 
             Request request = new Request.Builder()
-                    .url(strings[0])
+                    .url(strings[0]) //strings là URL
                     .post(requestBody)
                     .build();
             try {
                 Response response = client.newCall(request).execute();
-                return  response.body().string();
+                return  response.body().string(); //lấy dữ liệu trả về dòng 153
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -144,13 +151,12 @@ public class ActivityADD extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s) { // 145 truyền cho thg này
             if(s.equals("true"))
             {
                 Toast.makeText(ActivityADD.this, "Thêm thành công ", Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(ActivityADD.this, ActivityNote.class);
-                startActivity(intent);
-
+                startActivity(intent); //cho nó về màn hình chính
 
             }
             if(s.equals("ERROR05"))

@@ -70,16 +70,14 @@ public class ActivityNote extends AppCompatActivity {
         setContentView(R.layout.activity_note);
         Anhxa();
         AcctionBar();
-       // registerForContextMenu(imageView        );
+        intent = getIntent();
+        USER = intent.getStringExtra(ActiLogin.USERNAME);
+
+
+
+
         sharedPreferences = getSharedPreferences("HisLog", MODE_PRIVATE);
         String user = sharedPreferences.getString("username", "");
-        String pass = sharedPreferences.getString("password", "");
-//
-//        if( user.equals("") || pass.equals(""))
-//        {
-//            Intent intent = new Intent(ActivityNote.this, ActiLogin.class);
-//            startActivity(intent);
-//        }
 
         // sự kiện nav bar
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -108,15 +106,35 @@ public class ActivityNote extends AppCompatActivity {
                         Toast.makeText(ActivityNote.this, "setting", Toast.LENGTH_SHORT).show();
                         break;
                     }
+                    case R.id.mAll:
+                    {
+                        noteAdapter.fillterNhan("");
+                        break;
+                    }
+                    case R.id.mBlue:
+                    {
+                        noteAdapter.fillterNhan("1");
+                        break;
+                    }
+                    case R.id.mGreen:
+                    {
+                        noteAdapter.fillterNhan("2");
+                        break;
+                    }
+                    case R.id.mOrange:
+                    {
+                        noteAdapter.fillterNhan("3");
+                        break;
+                    }
+                    case R.id.mGrey:
+                    {
+                        noteAdapter.fillterNhan("4");
+                        break;
+                    }
                 }
                 return false;
             }
         });
-
-
-        intent = getIntent();
-        USER = intent.getStringExtra(ActiLogin.USERNAME);
-
         //Load listview note
         runOnUiThread(new Runnable() {
             @Override
@@ -148,38 +166,7 @@ public class ActivityNote extends AppCompatActivity {
             }
         });
 
-//        lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//                XacNhanXoa(arrNote.get(position).ID);
-//                return false;
-//            }
-//        });
-//        imageView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(ActivityNote.this, "Xoa", Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
-
-/*    @Override
-    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-        getMenuInflater().inflate(R.menu.context_menu, menu);
-        menu.setHeaderTitle("Tuỳ chọn: ");
-
-        super.onCreateContextMenu(menu, v, menuInfo);
-    }*/
-
-//    @Override
-//    public boolean onContextItemSelected(@NonNull MenuItem item) {
-//        switch (item.getItemId()){
-//            case R.id.mSaoChep:
-//                Toast.makeText(ActivityNote.this, "chép", Toast.LENGTH_LONG).show();
-//                break;
-//        }
-//        return super.onContextItemSelected(item);
-//    }
 
     private void Anhxa()
     {
@@ -205,54 +192,11 @@ public class ActivityNote extends AppCompatActivity {
         });
     }
 
-//    private void LoadSpinner()
-//    {
-//        ArrayList<String> arrColor = new ArrayList<>();
-//        arrColor.add("Toàn bộ");
-//        arrColor.add("Blue");
-//        arrColor.add("Green");
-//        arrColor.add("Orange");
-//        arrColor.add("Grey");
-//        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, arrColor);
-//        spinner.setAdapter(adapter);
-//    }
-//    private void XacNhanXoa(final int id)
-//    {
-//        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-//        dialog.setTitle("Xac nhan xoa");
-//        dialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                new XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
-//            }
-//
-//        });
-//        dialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//        dialog.show();
-//    }
-    //menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu1, menu);
-    //    MenuItem menuItem = menu.findItem(R.id.app_bar_search);
+        getMenuInflater().inflate(R.menu.menusearch, menu); //set menu
+
         SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
-//       SearchView searchView = (SearchView) MenuItemCompat.getActionView(menuItem);
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                noteAdapter.fillter(newText.trim());
-//                return false;
-//            }
-//        });
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -270,31 +214,6 @@ public class ActivityNote extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-//
-//    @Override
-//    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-//        switch ((item.getItemId()))
-//        {
-//            case R.id.mnSet:
-//            {
-//                Intent intent = new Intent(ActivityNote.this, ActivitySetting.class);
-//                startActivity(intent);
-//                break;
-//            }
-//
-//            case R.id.mnLogout:
-//            {
-//                SharedPreferences.Editor editor = sharedPreferences.edit();
-//                editor.clear();
-//                editor.commit();
-//
-//                Intent intent = new Intent(ActivityNote.this, ActiLogin.class);
-//                startActivity(intent);
-//                break;
-//            }
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
 
     class  LoadLV extends AsyncTask<String, String, String>
     {
