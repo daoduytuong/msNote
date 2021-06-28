@@ -2,7 +2,7 @@
 $conn = MySQLi_connect("mysql5045.site4now.net", "a764dd_tuongdb", "DuyTuong@68", "db_a764dd_tuongdb");
 $username = $_POST['username'];
 mysqli_query($conn, "SET NAMES 'utf8'");
-$query = mysqli_query($conn, "SELECT * FROM NOTE where username = '$username'");
+$query = mysqli_query($conn, "SELECT * FROM NOTE where username = '$username' order by ID DESC ");
 $mang = array();
 
 while($row = mysqli_fetch_array($query))
