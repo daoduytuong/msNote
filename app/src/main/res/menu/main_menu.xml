@@ -7,22 +7,31 @@
             <menu>
                 <item android:title="ALL"
                     android:id="@+id/mAll"/>
+<!--                <item-->
+<!--                    android:id="@+id/mBlue"-->
+<!--                    android:icon="@drawable/ic_blue"-->
+<!--                    android:iconTint="@drawable/ic_blue"-->
+<!--                    android:iconTintMode="@drawable/ic_blue"-->
+<!--                    app:showAsAction="always"-->
+<!--                    android:visible="true"-->
+<!--                    android:title="Blue" />-->
                 <item
                     android:id="@+id/mBlue"
-                    android:icon="@drawable/ic_blue"
-                    android:title="Blue" />
+                    android:icon="@drawable/im_blue"
+                    android:title="Blue"
+                    android:iconTint="@color/blue"/>
                 <item
                     android:id="@+id/mGreen"
-                    android:icon="@drawable/ic_green"
+                    android:icon="@drawable/im_green"
                     android:title="Green"
                     />
                 <item
                     android:id="@+id/mOrange"
-                    android:icon="@drawable/ic_orange"
+                    android:icon="@drawable/im_orange"
                     android:title="Orange" />
                 <item
                     android:id="@+id/mGrey"
-                    android:icon="@drawable/ic_grey"
+                    android:icon="@drawable/im_grey"
                     android:title="Grey" />
             </menu>
         </item>

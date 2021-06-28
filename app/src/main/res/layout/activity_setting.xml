@@ -15,7 +15,7 @@
         android:layout_marginStart="4dp"
         android:layout_marginTop="0dp"
         android:gravity="center"
-        android:text="msNote \n Ứng dụng ghi chú lưu trữ đám mây"
+        android:text="Ghi chú msNote \nPhiên bản beta"
         android:textSize="20dp"
         tools:layout_editor_absoluteX="106dp"
         tools:layout_editor_absoluteY="144dp" />
@@ -28,7 +28,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="-5dp"
-        android:layout_marginTop="84dp"
+        android:layout_marginTop="100dp"
         android:layout_marginEnd="5dp"
         android:foregroundGravity="center"
         app:srcCompat="@mipmap/ic_launcher" />
@@ -40,7 +40,7 @@
         android:layout_below="@+id/textView"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="21dp"
+        android:layout_marginTop="35dp"
         android:text=" Tác giả: Đào Duy Tường \n Email: daoduytuong.dhqn@gmail.com \n Github: https://github.com/daoduytuong \n\n Sinh viên Khoa CNTT - ĐH Quy Nhơn"
         android:textSize="20dp" />
 
