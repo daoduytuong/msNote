@@ -26,12 +26,13 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
 
 ## Cơ sở dữ liệu
 - Bảng user
-|  Tên  |  Kiểu dữ liệu  |  Ghi chú  |
+  |  Tên  |  Kiểu dữ liệu  |  Ghi chú  |
   |  :-----  |  :----------  |  :--------------  |  
   | ID | int| Key | 
   | username | varchar |  | 
   | password | varchar |  |  
- - Bảng note
+
+- Bảng note
   
   |  Tên  |  Kiểu dữ liệu  |  Ghi chú  |
   |  :-----  |  :----------  |  :--------------  |  
