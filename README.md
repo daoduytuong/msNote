@@ -58,6 +58,7 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
 	- com.google.android.material:material:1.4.0-rc01
 	- androidx.
 ### Tham khảo
+- [Video hướng dẫn set màu cho icon trên Navigation Draw, không bị đè bởi màu hệ thống](https://www.youtube.com/watch?v=6SrKOBV_hx8&t=893s)
 - SearchView: https://www.youtube.com/watch?v=uiU6L_8j0ws
 - [Android OkHttp - Bài 3: Post dữ liệu lên server - YouTube](https://www.youtube.com/watch?v=aJJcpR6PvYo)
 - [Android OkHttp - Bài 4: Post file lên server - YouTube](https://www.youtube.com/watch?v=x43xArbrJpI)
