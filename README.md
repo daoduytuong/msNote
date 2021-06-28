@@ -31,7 +31,7 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
   | ID | int| Key | 
   | username | varchar |  | 
   | password | varchar |  |  
-  - Bảng note
+ - Bảng note
   
   |  Tên  |  Kiểu dữ liệu  |  Ghi chú  |
   |  :-----  |  :----------  |  :--------------  |  
