@@ -9,7 +9,7 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
 Ở server, viết các file php để nhận, xử lý dữ liệu được gửi từ client và trả lại kết quả. Dữ liệu được nhận bằng giao thức POST.  Quá trình xử lý là việc thực hiện các thao tác select, update, delete với cơ sở dữ liệu mySql. Việc gọi lệnh sql để thực hiện thao tác với cơ sở dữ liệu sẽ trả lại kết quả nếu thành công hoặc thất bại, “true” nếu thành công hoặc các mã lỗi  “ERROR__” nếu thất bại vd: ERROR01, ERROR02…
 
 ## Giao diện
-![Screenshot_2021-06-28-17-06-47-59_a4e1cf726750bb7f4830b7074dbaf8c2](https://user-images.githubusercontent.com/76141709/123620611-9f73d680-d834-11eb-8199-dcb19cc98648.jpg)
+![Screenshot_2021-06-29-05-30-17-66_a4e1cf726750bb7f4830b7074dbaf8c2](https://user-images.githubusercontent.com/76141709/123713337-61ab9800-d89e-11eb-9cc4-a8409758f310.jpg)
  
 ## Chức năng chính
 
@@ -53,6 +53,17 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
 - Custom ListView/Custom Adapter
 - SharedPreferences
 - AsyncTask
+## Hướng dẫn cài đặt
+- Với hosting
+  - Tạo hosting(hostbuddy...) và cơ sở dữ liệu
+  - Sửa thông tin database trong các file php và up lên host
+  - Sửa liên kết trong các hàm Post dữ liệu trong mã nguồn ứng dụng
+- Với Local Host
+  - Tạo cơ sở dữ liệu
+  - Copy file PHP vàp htdocs và sửa thông tin database
+  - Lấy IP của máy, ứng dụng sẽ thể truy cập trực tiếp bằng link localhost vì vậy cần lấy IP của máy [xem tại đây](https://github.com/daoduytuong/msNote/blob/387ec2a70a202231790978de58b54eda55e78dbb/PHP%20-%20mySql/L%E1%BA%A5y%20IP%20PC%20ch%E1%BA%A1y%20localhost.pdf)
+  - Sửa liên kết trong các hàm Post dữ liệu trong mã nguồn ứng dụng
+  - Chạy và sửa lỗi
 ### Thư viện
 	- com.squareup.okhttp3:okhttp:4.9.0 
 	- com.google.android.material:material:1.4.0-rc01
