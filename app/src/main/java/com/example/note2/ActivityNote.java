@@ -171,6 +171,11 @@ public class ActivityNote extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         drawerLayout = findViewById(R.id.layoutNote);
         navigationView = findViewById(R.id.nav_note);
+
+
+        //câu lệnh quan trọng, cho phép icon hiển thị màu gốc của nó, không bị đè bởi màu hệ thống
+        navigationView.setItemIconTintList(null);
+
         textView = findViewById(R.id.textView2);
        // imageView = findViewById(R.id.imageViewNote);
     }

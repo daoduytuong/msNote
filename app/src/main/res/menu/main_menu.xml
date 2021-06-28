@@ -2,19 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <group android:checkableBehavior="single">
-
+<!--  Lưu ý: sau khi set icon màu sắc ở trang này, cần thực hiện lệnh setItemIconTintList(null); sau lệnh ánh xạ nếu không icon sẽ bị đè màu bởi màu hệ thống-->
         <item android:title="Nhóm">
             <menu>
                 <item android:title="ALL"
                     android:id="@+id/mAll"/>
-<!--                <item-->
-<!--                    android:id="@+id/mBlue"-->
-<!--                    android:icon="@drawable/ic_blue"-->
-<!--                    android:iconTint="@drawable/ic_blue"-->
-<!--                    android:iconTintMode="@drawable/ic_blue"-->
-<!--                    app:showAsAction="always"-->
-<!--                    android:visible="true"-->
-<!--                    android:title="Blue" />-->
                 <item
                     android:id="@+id/mBlue"
                     android:icon="@drawable/im_blue"
