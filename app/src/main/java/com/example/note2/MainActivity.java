@@ -29,60 +29,60 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     DrawerLayout drawerlayout;
     NavigationView navigationview;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        anhXa();
-        actionToolBar();
-
-        navigationview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-                switch ((item.getItemId()))
-        {
-            case R.id.mSetting:
-            {
-                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_LONG).show();
-                break;
-            }
-
-            case R.id.mLogout:
-            {
-                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.mSupport:
-            {
-                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_SHORT).show();
-                break;
-            }
-        }
-                return false;
-            }
-        });
-    }
-    private void anhXa() {
-        toolbar = (Toolbar) findViewById(R.id.toolBar);
-        drawerlayout = (DrawerLayout) findViewById (R.id.drawerLayout);
-        navigationview = (NavigationView) findViewById(R.id.navigationView);
-    }
-
-    private void actionToolBar() {
-        setSupportActionBar(toolbar);
-        // Loại bỏ tiểu đề mặc định
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        //Mặc định nếu bạn muốn hiện thị biểu tượng có hình mũi tên như là nút bấm quay trở lại cửa sổ trước
-        toolbar.setNavigationIcon(R.drawable.ic_account);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerlayout.openDrawer(GravityCompat.START);
-            }
-            //Để mở Drawer , khi người dùng chạm vào button
-        });
-    }
-
+    //@Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//        anhXa();
+//        actionToolBar();
+//
+//        navigationview.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+//                switch ((item.getItemId()))
+//        {
+//            case R.id.mSetting:
+//            {
+//                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_LONG).show();
+//                break;
+//            }
+//
+//            case R.id.mLogout:
+//            {
+//                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_SHORT).show();
+//                break;
+//            }
+//            case R.id.mSupport:
+//            {
+//                Toast.makeText(MainActivity.this, "setting", Toast.LENGTH_SHORT).show();
+//                break;
+//            }
+//        }
+//                return false;
+//            }
+//        });
+//    }
+//    private void anhXa() {
+//        toolbar = (Toolbar) findViewById(R.id.toolBar);
+//        drawerlayout = (DrawerLayout) findViewById (R.id.drawerLayout);
+//        navigationview = (NavigationView) findViewById(R.id.navigationView);
+//    }
+//
+//    private void actionToolBar() {
+//        setSupportActionBar(toolbar);
+//        // Loại bỏ tiểu đề mặc định
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        //Mặc định nếu bạn muốn hiện thị biểu tượng có hình mũi tên như là nút bấm quay trở lại cửa sổ trước
+//        toolbar.setNavigationIcon(R.drawable.ic_account);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawerlayout.openDrawer(GravityCompat.START);
+//            }
+//            //Để mở Drawer , khi người dùng chạm vào button
+//        });
+//    }
+//
 
 
 //    public boolean onNavigationItemSelected(@NonNull MenuItem item) {

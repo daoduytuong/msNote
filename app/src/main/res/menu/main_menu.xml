@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <group android:checkableBehavior="single">
+
         <item android:title="Nhóm">
             <menu>
                 <item android:title="ALL"
@@ -10,12 +10,12 @@
                 <item
                     android:id="@+id/mBlue"
                     android:icon="@drawable/ic_blue"
-                    android:title="Blue"
-                    />
+                    android:title="Blue" />
                 <item
                     android:id="@+id/mGreen"
                     android:icon="@drawable/ic_green"
-                    android:title="Green" />
+                    android:title="Green"
+                    />
                 <item
                     android:id="@+id/mOrange"
                     android:icon="@drawable/ic_orange"

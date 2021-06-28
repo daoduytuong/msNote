@@ -32,10 +32,9 @@ import okhttp3.Response;
 public class NoteAdapter extends BaseAdapter{
     Context context;
     int Layout;
-    List<Note> arrNote;
-    ArrayList<Note> ListNotetmp;
-    ListView listView;
-    int a;
+    List<Note> arrNote; //arr chính
+    ArrayList<Note> ListNotetmp; //arr tạm  để lưu trữ khi tìm kiếm
+    int posisionXoa;
 
     public NoteAdapter(Context context, int layout, ArrayList<Note> arrNote) {
         this.context = context;
@@ -72,29 +71,30 @@ public class NoteAdapter extends BaseAdapter{
         txtND.setText(arrNote.get(position).NoiDung);
 
         ImageView imageView = convertView.findViewById(R.id.imageViewNote);
+        //sự kiện khi click vào hình
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
               //  Toast.makeText(context, ""+arrNote.get(position).getID(), Toast.LENGTH_LONG).show();
                 XacNhanXoa(arrNote.get(position).getID());
-                a = position; //lấy posision ra để xuống dưới xoá
+                posisionXoa = position; //lấy posision ra để xuống dưới xoá
             }
         });
         return convertView;
     }
-
+    //dùng để tìm kiếm trong trong mảng đã lấy về
     public void fillter(String charText)
     {
-        charText = charText.toLowerCase(Locale.getDefault());
+        charText = charText.toLowerCase(Locale.getDefault()); //chuyển chuỗi về dạng chữ thường
         arrNote.clear();
         if(charText.length() == 0)
         {
-            arrNote.addAll(ListNotetmp);
+            arrNote.addAll(ListNotetmp); // nếu không có nội dung tìm kiếm, thì hiển thị lại toàn bộ arr
         } else
         {
             for (Note not : ListNotetmp)
             {
-                if(not.TieuDe.toString().toLowerCase(Locale.getDefault())
+                if(not.TieuDe.toString().toLowerCase(Locale.getDefault()) //lọc theo tiêu đề
                         .contains(charText))
                 {
                     arrNote.add(not);
@@ -135,7 +135,6 @@ public class NoteAdapter extends BaseAdapter{
               //  new ActivityNote.XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
                 new  XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
              //   Toast.makeText(context, " Xoa.", Toast.LENGTH_LONG).show();
-                ActivityNote.arrNote.remove(a);
             }
         });
         dialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
@@ -146,25 +145,6 @@ public class NoteAdapter extends BaseAdapter{
         });
         dialog.show();
     }
-
-
-
-//    @Override
-//    public Filter getFilter() {
-//        Filter filter = new Filter() {
-//            @Override
-//            protected FilterResults performFiltering(CharSequence constraint) {
-//                return null;
-//            }
-//
-//            @Override
-//            protected void publishResults(CharSequence constraint, FilterResults results) {
-//
-//            }
-//        };
-//        return filter;
-//    }
-
 
     class  XoaNote extends AsyncTask<String, String, String>
     {
@@ -198,6 +178,7 @@ public class NoteAdapter extends BaseAdapter{
         protected void onPostExecute(String s) {
             if(s.equals("true"))
             {
+                ActivityNote.arrNote.remove(posisionXoa); // khi xoá ở server thành công thì xoá phần tử khỏi mảng
                 Toast.makeText(context, "Xoa thanh cong", Toast.LENGTH_LONG).show();
               //  new ActivityNote.LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
                 notifyDataSetChanged(); //baó cáo, để reload listview
@@ -213,7 +194,6 @@ public class NoteAdapter extends BaseAdapter{
             super.onPostExecute(s);
         }
     }
-
     @Override
     public void notifyDataSetChanged() {
         super.notifyDataSetChanged();

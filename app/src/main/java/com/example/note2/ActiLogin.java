@@ -29,7 +29,7 @@ import okhttp3.Response;
 
 public class ActiLogin extends AppCompatActivity {
     Button button;
-    TextInputEditText textViewUS;
+    TextInputEditText textUS;
     TextInputEditText textpass;
     TextView tt;
     SharedPreferences sharedPreferences;
@@ -42,12 +42,8 @@ public class ActiLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acti_login);
+        AnhXa();
 
-        button = findViewById(R.id.btnLogin);
-        textViewUS = findViewById(R.id.editTextUsername);
-        tt = findViewById(R.id.textViewLogin);
-        textpass = findViewById(R.id.editTextPassword);
-        toolbar = findViewById(R.id.toolbarLogin);
 
         setSupportActionBar(toolbar);
         //sharedPreferences
@@ -56,21 +52,31 @@ public class ActiLogin extends AppCompatActivity {
         AutoLogin();
 
         //lấy dữ liẹu từ sharedPreferences
-        textViewUS.setText(sharedPreferences.getString("username", ""));
+        textUS.setText(sharedPreferences.getString("username", ""));
         textpass.setText(sharedPreferences.getString("password", ""));
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String User = textViewUS.getText().toString().trim();
+                String User = textUS.getText().toString().trim();
                 String Pass = textpass.getText().toString().trim();
                 new PostToServer(User, Pass).execute("http://tuongdhqn-001-site1.ftempurl.com/postLog.php");
             }
         });
     }
 
+    private void AnhXa() {
+        button = findViewById(R.id.btnLogin);
+        textUS = findViewById(R.id.editTextUsername);
+        tt = findViewById(R.id.textViewLogin);
+        textpass = findViewById(R.id.editTextPassword);
+        toolbar = findViewById(R.id.toolbarLogin);
+    }
+
     public void AutoLogin()
     {
+        //nếu trước đó đã đăng nhập thành công rồi, sẽ có dữ liệu lưu trong bộ nhớ
+        //get dữ liệu trong bộ nhớ ra và gọi lệnh đăng nhập
         String user = sharedPreferences.getString("username", "");
         String pass = sharedPreferences.getString("password", "");
         runOnUiThread(new Runnable() {
@@ -81,19 +87,17 @@ public class ActiLogin extends AppCompatActivity {
         });
     }
 
-    //set menu
-    //là góc trên phải chữ SIGN IN
+    //set menu (SIGN IN)
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menulogin, menu);
         return super.onCreateOptionsMenu(menu);
     }
-
-    // sự kiện cái menu
+    // sự kiện menu(SIGN IN)
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.mnDki)
         {
-            // chuyển màn hình
+            // chuyển màn hình sang đăng ký
             Intent intent = new Intent(ActiLogin.this, ActivityDangKy.class);
             startActivity(intent);
         }
@@ -102,6 +106,7 @@ public class ActiLogin extends AppCompatActivity {
 
     class PostToServer extends AsyncTask<String, Void, String>
     {
+
         OkHttpClient client = new OkHttpClient();
         String user;
         String ps;
@@ -115,7 +120,7 @@ public class ActiLogin extends AppCompatActivity {
         protected String doInBackground(String... strings)
         {
             RequestBody requestBody = new MultipartBody.Builder()
-                    .addFormDataPart("username", user)
+                    .addFormDataPart("username", user)  //username trùng với biến $_POST[username] trong php
                     .addFormDataPart("password", ps)
                     .setType(MultipartBody.FORM)
                     .build();
@@ -125,8 +130,8 @@ public class ActiLogin extends AppCompatActivity {
                     .post(requestBody)
                     .build();
             try {
-                Response response = client.newCall(request).execute();
-                return  response.body().string();
+                Response response = client.newCall(request).execute(); //thực hiện request, thao tác với server
+                return response.body().string(); //return dữ liệu được server trả về
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -134,7 +139,8 @@ public class ActiLogin extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s)  //s là dữ liệu được return dòng 134
+        {
             if(s.equals("true"))
             {
                 // Toast.makeText(ActiLogin.this, "Thanh cong", Toast.LENGTH_LONG).show();
@@ -144,7 +150,7 @@ public class ActiLogin extends AppCompatActivity {
                 editor.commit();
 
                 Intent intent = new Intent(ActiLogin.this, ActivityNote.class); //chuyển màn hình
-                intent.putExtra(USERNAME, user);
+                intent.putExtra(USERNAME, user);  //gửi username sang màn hình show list note(có thể có hoặc không)
                 startActivity(intent);
             }else if(s.equals("false"))
             {

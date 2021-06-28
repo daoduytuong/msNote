@@ -50,9 +50,7 @@ import okhttp3.Response;
 public class ActivityNote extends AppCompatActivity {
     ListView lv;
     TextView textView;
-    Intent intent;
     Toolbar toolbar;
-    //ImageView imageView;
     NavigationView navigationView;
     DrawerLayout drawerLayout;
     FloatingActionButton buttonADD;
@@ -69,11 +67,12 @@ public class ActivityNote extends AppCompatActivity {
         setContentView(R.layout.activity_note);
         Anhxa();
         AcctionBar();
-        intent = getIntent();
-        //USER = intent.getStringExtra(ActiLogin.USERNAME);
+       // intent = getIntent();
+        //USER = intent.getStringExtra(ActiLogin.USERNAME); // lấy username đc gửi từ acti login(có thể có hoặc không)
 
         sharedPreferences = getSharedPreferences("HisLog", MODE_PRIVATE);
-        String user = sharedPreferences.getString("username", "");
+        String user = sharedPreferences.getString("username", ""); //lấy username trong bộ nhớ(khi đã đăng nhập thành công)
+        //vì khi đăng nhập thành công, username sẽ đc lưu, và 1 lúc chỉ có 1 username nên có thể get từ bộ nhớ thay vì đc truyền từ trang login
 
         // sự kiện nav bar
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -90,7 +89,7 @@ public class ActivityNote extends AppCompatActivity {
                     case R.id.mLogout:
                     {
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear();
+                        editor.clear(); //clear bộ nhớ(chứa dữ liệu đăng nhập)
                         editor.commit();
 
                         Intent intent = new Intent(ActivityNote.this, ActiLogin.class);
@@ -99,7 +98,7 @@ public class ActivityNote extends AppCompatActivity {
                     }
                     case R.id.mSupport:
                     {
-                        Toast.makeText(ActivityNote.this, "setting", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityNote.this, "Chức năng đang hoàn thiện", Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.mAll:
@@ -109,7 +108,7 @@ public class ActivityNote extends AppCompatActivity {
                     }
                     case R.id.mBlue:
                     {
-                        noteAdapter.fillterNhan("1");
+                        noteAdapter.fillterNhan("1"); //tìm kiếm theo nhãn của note
                         break;
                     }
                     case R.id.mGreen:
@@ -131,6 +130,7 @@ public class ActivityNote extends AppCompatActivity {
                 return false;
             }
         });
+
         //Load listview note
         runOnUiThread(new Runnable() {
             @Override
@@ -143,17 +143,17 @@ public class ActivityNote extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ActivityNote.this, ActivityADD.class);
-                intent.putExtra(USERNAME, user);
+                intent.putExtra(USERNAME, user); //truyền username sang acti thêm(hoặc sang đó get dữ liệu từ bộ nhớ)
                 startActivity(intent);
             }
         });
-
+        //acti xem chi tiết và chỉnh sửa
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intentDetail = new Intent(ActivityNote.this, ActivityNoteDetail.class);
-                Bundle bundle = new Bundle();
-                bundle.putInt("ID", arrNote.get(position).ID);
+                Bundle bundle = new Bundle(); //truyền dữ liệu sang bên actiNoteDetail để hiển thị
+                bundle.putInt("ID", arrNote.get(position).ID); //ID dùng để sửa hoặc xoá
                 bundle.putString("TD", arrNote.get(position).TieuDe);
                 bundle.putString("ND", arrNote.get(position).NoiDung);
                 bundle.putString("CL", arrNote.get(position).Nhan);
@@ -176,33 +176,37 @@ public class ActivityNote extends AppCompatActivity {
     }
     private void AcctionBar()
     {
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar); //set toolbar
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_draw);
+        actionBar.setDisplayHomeAsUpEnabled(true); //hiển thị 3 dấu gạch để mở navigation
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_draw); //icon 3 dấu gạch
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
+                drawerLayout.openDrawer(GravityCompat.START); //mở navi
             }
         });
     }
 
+    //search tìm kiếm
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menusearch, menu); //set menu
 
          SearchView searchView = (SearchView) menu.findItem(R.id.app_bar_search).getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener()
+        {
             @Override
-            public boolean onQueryTextSubmit(String query) {
+            public boolean onQueryTextSubmit(String query) //sự kiện khi nhất submit
+            {
                 Toast.makeText(ActivityNote.this, query, Toast.LENGTH_LONG).show();
                 return false;
             }
 
             @Override
-            public boolean onQueryTextChange(String newText) {
-                Log.d("Searc", newText);
+            public boolean onQueryTextChange(String newText) //tìm ngay lúc có thay đổi nội dung tìm kiếm
+            {
+                Log.d("Search", newText);
                 noteAdapter.fillter(newText.trim());
                 return false;
             }
@@ -217,7 +221,7 @@ public class ActivityNote extends AppCompatActivity {
         String user;
         public LoadLV(String user) {
             this.user = user;
-        }
+        } //load list note theo username đang login
         @Override
         protected String doInBackground(String... strings)
         {
@@ -275,7 +279,7 @@ public class ActivityNote extends AppCompatActivity {
                         arrNote
                         )
                 {
-                    //hiển thị màu
+                    //hiển thị màu backgroud từng note
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
                         View view = super.getView(position, convertView, parent);

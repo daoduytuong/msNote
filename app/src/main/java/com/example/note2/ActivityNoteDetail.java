@@ -54,6 +54,7 @@ public class ActivityNoteDetail extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        //get dữ liệu được gửi từ actiNote khi nhấn voà 1 note
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         id = bundle.getInt("ID");
@@ -64,7 +65,9 @@ public class ActivityNoteDetail extends AppCompatActivity {
         //color.setSelection(getIndex(color, Bcolor))
        // color.setSelection(2);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        //button lưu
+        button.setOnClickListener(new View.OnClickListener()
+        {
             @Override
             public void onClick(View v) {
                 td = textViewTD.getText().toString().trim();
@@ -89,7 +92,7 @@ public class ActivityNoteDetail extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (arrColor.get(position)) {
                     case "Mặc định":
-                        Scolor = "NULL";
+                        Scolor = Bcolor; //nhận lại màu cũ để nếu k có thay đổi, set như cũ
                         break;
                     case "Blue":
                         Scolor = "1";
@@ -120,16 +123,7 @@ public class ActivityNoteDetail extends AppCompatActivity {
         color = findViewById(R.id.spinner3);
     }
 
-//    private int getIndex(Spinner spinner, String myString){
-//        for (int i=0;i<spinner.getCount();i++){
-//            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(myString)){
-//                return i;
-//            }
-//        }
-//
-//        return 0;
-//    }
-
+    //menu góc trên phải
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu2, menu);
         return super.onCreateOptionsMenu(menu);
@@ -144,7 +138,6 @@ public class ActivityNoteDetail extends AppCompatActivity {
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clipData = ClipData.newPlainText("EditText", textViewND.getText().toString());
                 clipboardManager.setPrimaryClip(clipData);
-
                 clipData.getDescription();
                 Toast.makeText(ActivityNoteDetail.this, "Đã lưu vào bộ nhớ tạm", Toast.LENGTH_SHORT).show();
                 break;
@@ -152,6 +145,7 @@ public class ActivityNoteDetail extends AppCompatActivity {
             case R.id.mnDelete:
             {
                 XacNhanXoa(id);
+                break;
             }
         }
         return super.onOptionsItemSelected(item);
@@ -176,7 +170,7 @@ public class ActivityNoteDetail extends AppCompatActivity {
         protected String doInBackground(String... strings)
         {
             RequestBody requestBody = new MultipartBody.Builder()
-                    .addFormDataPart("id", String.valueOf(id))
+                    .addFormDataPart("id", String.valueOf(id)) //các giá trị phải name phải trùng với $_POST trong php
                     .addFormDataPart("tieude", TD)
                     .addFormDataPart("noidung", ND)
                     .addFormDataPart("color", cl)
@@ -188,8 +182,8 @@ public class ActivityNoteDetail extends AppCompatActivity {
                     .post(requestBody)
                     .build();
             try {
-                Response response = client.newCall(request).execute();
-                return  response.body().string();
+                Response response = client.newCall(request).execute(); //thực hiện request, thao tác với server
+                return  response.body().string(); //return dữ liệu được server trả về
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -197,7 +191,8 @@ public class ActivityNoteDetail extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) {
+        protected void onPostExecute(String s)  //s là dữ liệu được return dòng 186
+        {
 
            // Toast.makeText(ActivityADD.this, "nd "+s, Toast.LENGTH_SHORT).show();
             if(s.equals("true"))
@@ -221,13 +216,12 @@ public class ActivityNoteDetail extends AppCompatActivity {
     private void XacNhanXoa(final int id)
     {
         AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setTitle("Xac nhan xoa");
+        dialog.setTitle("Xác nhận xoá");
         dialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 new XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
             }
-
         });
         dialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {
             @Override
@@ -270,7 +264,7 @@ public class ActivityNoteDetail extends AppCompatActivity {
             if(s.equals("true"))
             {
                 Toast.makeText(ActivityNoteDetail.this, "Xoa thanh cong", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ActivityNoteDetail.this, ActivityNote.class);
+                Intent intent = new Intent(ActivityNoteDetail.this, ActivityNote.class); //quay về acti show list Note
                 startActivity(intent);
             }
             if(s.equals("ERROR09"))

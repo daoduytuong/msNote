@@ -82,7 +82,7 @@ public class ActivityADD extends AppCompatActivity {
                     case "Green":
                         Scoler = "2";
                         break;
-                    case   "Orange":
+                    case  "Orange":
                         Scoler="3";
                         break;
                     case  "Grey":
@@ -128,9 +128,9 @@ public class ActivityADD extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings)
         {
-            //đoạn này chưa hiểu rõ
+
             RequestBody requestBody = new MultipartBody.Builder()
-                    .addFormDataPart("username", user) //set dữ liệu vào biến POST để thg php lất $_POST[username]
+                    .addFormDataPart("username", user) //set dữ liệu vào biến POST để php lấy $_POST[username]
                     .addFormDataPart("tieude", TD)
                     .addFormDataPart("noidung", ND)
                     .addFormDataPart("color", cl)
@@ -151,7 +151,7 @@ public class ActivityADD extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(String s) { // 145 truyền cho thg này
+        protected void onPostExecute(String s) { // 146 truyền cho thg này
             if(s.equals("true"))
             {
                 Toast.makeText(ActivityADD.this, "Thêm thành công ", Toast.LENGTH_LONG).show();
@@ -171,59 +171,5 @@ public class ActivityADD extends AppCompatActivity {
             super.onPostExecute(s);
         }
     }
-//
-//
-//    class AddToSV extends AsyncTask<String, Void, String>
-//    {
-//        OkHttpClient client = new OkHttpClient();
-//        String User;
-//        String Tieude;
-//        String NoiDung;
-//
-//        public AddToSV(String user, String tieude, String noiDung) {
-//            User = user;
-//            Tieude = tieude;
-//            NoiDung = noiDung;
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... strings) {
-//
-//            RequestBody requestBody = new MultipartBody.Builder()
-//                    .addFormDataPart("username", "Admin")
-//                    .addFormDataPart("tieude", "Tieude")
-//                    .addFormDataPart("noidung", "NoiDung")
-//                    .build();
-//
-//            Request request = new Request.Builder()
-//                    .url(strings[0])
-//                    .post(requestBody)
-//                    .build();
-//
-//            try {
-//                Response response = client.newCall(request).execute();
-//                return response.body().string();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//
-//            super.onPostExecute(s);
-//            Toast.makeText(ActivityADD.this, s+"", Toast.LENGTH_LONG).show();
-////            if(s.equals("true"))
-////            {
-////                Toast.makeText(ActivityADD.this, s+"Them thanh cong", Toast.LENGTH_LONG).show();
-////            }else if (s.equals("ERROR6"))
-////            {
-////                Toast.makeText(ActivityADD.this, s+"Them that bai", Toast.LENGTH_LONG).show();
-////            }else if(s.equals("ERROR5"))
-////            {
-////                Toast.makeText(ActivityADD.this, s+"Loi truyen du lieu", Toast.LENGTH_LONG).show();
-////            }
-//        }
-//    }
+
 }
