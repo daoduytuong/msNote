@@ -64,6 +64,7 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
   - Lấy IP của máy, ứng dụng sẽ không thể truy cập trực tiếp bằng link localhost vì vậy cần lấy IP của máy [xem tại đây](https://github.com/daoduytuong/msNote/blob/387ec2a70a202231790978de58b54eda55e78dbb/PHP%20-%20mySql/L%E1%BA%A5y%20IP%20PC%20ch%E1%BA%A1y%20localhost.pdf)
   - Sửa liên kết trong các hàm Post dữ liệu trong mã nguồn ứng dụng
   - Chạy và sửa lỗi
+- Trong trường hợp cài đặt được project, đăng nhập thành công nhưng lỗi phần load danh sách note về, có thể lỗi do phiên bản php [cách sửa](https://github.com/daoduytuong/msNote/blob/779c3c73463da08aff551412e9b76dee5c36d5e2/PHP%20-%20mySql/JSONnote.php)
 ### Thư viện
 	- com.squareup.okhttp3:okhttp:4.9.0 
 	- com.google.android.material:material:1.4.0-rc01
