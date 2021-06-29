@@ -1,4 +1,5 @@
 <?php
+$conn = MySQLi_connect("localhost", "root", "", "msNote");
         $file_path = "image/";
         $file_path = $file_path.($_FILES['upIMG']['name']);
 

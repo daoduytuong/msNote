@@ -1,5 +1,5 @@
 <?php
-	$conn = MySQLi_connect("mysql5045.site4now.net", "a764dd_tuongdb", "DuyTuong@68", "db_a764dd_tuongdb");
+	$conn = MySQLi_connect("localhost", "root", "", "msNote");
     
     $id = $_POST['id'];   
 
