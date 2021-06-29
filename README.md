@@ -10,7 +10,7 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
 
 ## Giao diện
 ![Screenshot_2021-06-29-05-30-17-66_a4e1cf726750bb7f4830b7074dbaf8c2](https://user-images.githubusercontent.com/76141709/123713337-61ab9800-d89e-11eb-9cc4-a8409758f310.jpg)
- 
+ [Chi tiết giao diện và hướng dẫn sử dụngn](https://github.com/daoduytuong/msNote/blob/c5b16c154c110c1449b23dcf42a6e7f196b338c8/hdsd.pdf)
 ## Chức năng chính
 
 - Tự động đăng nhập
