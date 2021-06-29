@@ -61,7 +61,7 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
 - Với Local Host
   - Tạo cơ sở dữ liệu
   - Copy file PHP vàp htdocs và sửa thông tin database
-  - Lấy IP của máy, ứng dụng sẽ thể truy cập trực tiếp bằng link localhost vì vậy cần lấy IP của máy [xem tại đây](https://github.com/daoduytuong/msNote/blob/387ec2a70a202231790978de58b54eda55e78dbb/PHP%20-%20mySql/L%E1%BA%A5y%20IP%20PC%20ch%E1%BA%A1y%20localhost.pdf)
+  - Lấy IP của máy, ứng dụng sẽ không thể truy cập trực tiếp bằng link localhost vì vậy cần lấy IP của máy [xem tại đây](https://github.com/daoduytuong/msNote/blob/387ec2a70a202231790978de58b54eda55e78dbb/PHP%20-%20mySql/L%E1%BA%A5y%20IP%20PC%20ch%E1%BA%A1y%20localhost.pdf)
   - Sửa liên kết trong các hàm Post dữ liệu trong mã nguồn ứng dụng
   - Chạy và sửa lỗi
 ### Thư viện
@@ -89,6 +89,7 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
 - [Lập trình Android: Listview Custom Adapter - Phần 1 - YouTube](https://www.youtube.com/watch?v=grTGykNJ74A)
 - [Copy Text to Clipboard | Android Studio - YouTube](https://www.youtube.com/watch?v=nlYT3rfsXN4)
 - [Change Status Bar Color In Xamarin forms - YouTube](https://www.youtube.com/watch?v=6sRTOvrFYm0)
+
 ## Tác giả
 
 Project được thực hiện bởi:
