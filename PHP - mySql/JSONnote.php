@@ -1,10 +1,9 @@
 <?php
 $conn = MySQLi_connect("localhost", "root", "", "msNote");
- $username = $_POST['username'];
+$username = $_POST['username'];
 mysqli_query($conn, "SET NAMES 'utf8'");
-$query = mysqli_query($conn, "SELECT * FROM NOTE where username = '$username' order by ID DESC ");
+$query = mysqli_query($conn, "SELECT * FROM NOTE where username = '$username' order by ID DESC");
 $mang = array();
-
 while($row = mysqli_fetch_array($query))
 {
     $ID = $row['ID'];
@@ -12,10 +11,23 @@ while($row = mysqli_fetch_array($query))
     $TieuDe = $row['TieuDe'];
     $NoiDung = $row['NoiDung'];
     $Nhan = $row['Nhan'];
-    array_push($mang, new Note($ID, $username, $TieuDe, $NoiDung, $Nhan));
 
+    //khai bao nhu the nay moi chay dc trên php 8
+    $note = new Note;
+    $note->id = $ID;
+    $note->username = $username;
+    $note->TieuDe = $TieuDe;
+    $note->NoiDung = $NoiDung;
+    $note->Nhan= $Nhan;
+    array_push($mang, $note);
+
+
+    // câu lệnh dưới này dùng đc cho php7
+   // array_push($mang, new Note($ID, $username, $TieuDe, $NoiDung, $Nhan));
+   
+    
 }
-echo json_encode($mang);
+ echo json_encode($mang);
 class Note{
     var $id;
     var $username;
