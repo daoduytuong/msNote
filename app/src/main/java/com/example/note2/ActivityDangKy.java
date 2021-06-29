@@ -41,7 +41,7 @@ public class ActivityDangKy extends AppCompatActivity {
             public void onClick(View v) {
                 String User = textViewUS.getText().toString().trim();
                 String Pass = pass.getText().toString().trim();
-                new PostToServer(User, Pass).execute("http://tuongdhqn-001-site1.ftempurl.com/postReg.php");
+                new PostToServer(User, Pass).execute("http://192.168.1.2/msNote/postReg.php");
             }
         });
 

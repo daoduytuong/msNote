@@ -72,7 +72,7 @@ public class ActivityNoteDetail extends AppCompatActivity {
             public void onClick(View v) {
                 td = textViewTD.getText().toString().trim();
                 nd = textViewND.getText().toString().trim();
-                new PostToServer(id, td, nd, Scolor).execute("http://tuongdhqn-001-site1.ftempurl.com/updateNote.php");
+                new PostToServer(id, td, nd, Scolor).execute("http://192.168.1.2/msNote/updateNote.php");
             }
         });
     }
@@ -220,7 +220,7 @@ public class ActivityNoteDetail extends AppCompatActivity {
         dialog.setPositiveButton("Có", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                new XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
+                new XoaNote(id).execute("http://192.168.1.2/msNote/DelNote.php");
             }
         });
         dialog.setNegativeButton("Không", new DialogInterface.OnClickListener() {

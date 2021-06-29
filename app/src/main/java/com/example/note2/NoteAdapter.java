@@ -133,7 +133,7 @@ public class NoteAdapter extends BaseAdapter{
             @Override
             public void onClick(DialogInterface dialog, int which) {
               //  new ActivityNote.XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
-                new  XoaNote(id).execute("http://tuongdhqn-001-site1.ftempurl.com/DelNote.php");
+                new  XoaNote(id).execute("http://192.168.1.2/msNote/DelNote.php");
              //   Toast.makeText(context, " Xoa.", Toast.LENGTH_LONG).show();
             }
         });
@@ -180,7 +180,6 @@ public class NoteAdapter extends BaseAdapter{
             {
                 ActivityNote.arrNote.remove(posisionXoa); // khi xoá ở server thành công thì xoá phần tử khỏi mảng
                 Toast.makeText(context, "Xoa thanh cong", Toast.LENGTH_LONG).show();
-              //  new ActivityNote.LoadLV(USER).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
                 notifyDataSetChanged(); //baó cáo, để reload listview
             }
             if(s.equals("ERROR09"))

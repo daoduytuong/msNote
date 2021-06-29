@@ -105,7 +105,7 @@ public class ActivityADD extends AppCompatActivity {
                 nd = textViewND.getText().toString().trim();
                 //ADD.setText(USER + td  + nd ); //kiem tra du lieu
                // new AddToSV(USER,td,nd).execute("http://tuongdhqn-001-site1.ftempurl.com/addNote.php");
-                new PostToServer(USER,td,nd,Scoler).execute("http://tuongdhqn-001-site1.ftempurl.com/addnote.php");
+                new PostToServer(USER,td,nd,Scoler).execute("http://192.168.1.2/msNote/addnote.php");
             }
         });
     }

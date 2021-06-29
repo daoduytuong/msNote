@@ -135,7 +135,7 @@ public class ActivityNote extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new LoadLV(user).execute("http://tuongdhqn-001-site1.ftempurl.com/JSONnote.php");
+                new LoadLV(user).execute("http://192.168.1.2/msNote/JSONnote.php");
             }
         });
 

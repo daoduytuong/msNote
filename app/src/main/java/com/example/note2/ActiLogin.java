@@ -60,7 +60,9 @@ public class ActiLogin extends AppCompatActivity {
             public void onClick(View v) {
                 String User = textUS.getText().toString().trim();
                 String Pass = textpass.getText().toString().trim();
-                new PostToServer(User, Pass).execute("http://tuongdhqn-001-site1.ftempurl.com/postLog.php");
+                //dùng IP của máy để thay cho "localhost"
+
+                new PostToServer(User, Pass).execute("http://192.168.1.2/msNote/postLog.php");
             }
         });
     }
@@ -82,7 +84,7 @@ public class ActiLogin extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new  PostToServer(user,pass).execute("http://tuongdhqn-001-site1.ftempurl.com/postLog.php");
+                new  PostToServer(user,pass).execute("http://192.168.1.2/msNote/postLog.php");
             }
         });
     }

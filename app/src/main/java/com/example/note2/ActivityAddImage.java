@@ -53,7 +53,7 @@ public class  ActivityAddImage extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new UpIMG().execute("http://tuongdhqn-001-site1.ftempurl.com/addImage.php");
+                new UpIMG().execute("http://192.168.1.2/msNote/addImage.php");
             }
         });
     }
