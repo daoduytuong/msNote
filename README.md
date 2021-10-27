@@ -91,12 +91,7 @@ Việc trao đổi dữ liệu bằng cách sử dụng các phương thức c�
 - [Copy Text to Clipboard | Android Studio - YouTube](https://www.youtube.com/watch?v=nlYT3rfsXN4)
 - [Change Status Bar Color In Xamarin forms - YouTube](https://www.youtube.com/watch?v=6sRTOvrFYm0)
 
-## Tác giả
 
-Project được thực hiện bởi:
-- Đào Duy Tường
--	Email: daoduytuong.dhqn@gmail.com
--	Github: https://github.com/daoduytuong
 	
 ĐHQN, Quy Nhơn - Tháng 6 năm 2021
 
